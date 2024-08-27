@@ -1,0 +1,1340 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+  <title>
+  Box and Cox, by John Maddison Morton
+  </title>
+  <style type="text/css">
+
+body, table {
+   font-family: serif;
+   }
+
+div.text {
+   margin-left: 15%;
+   margin-right: 15%;
+   }
+div.image {
+   margin-left: 0%;
+   margin-right: 0%;
+   }
+
+a.toc {
+   text-decoration:none;
+   }
+
+h1,h2,h3,h4,h5,h6 {
+   text-align: center;
+   clear: both;
+   }
+h3 {
+   padding-top:75px;
+   font-size: 1.2em;
+   font-weight: normal;
+   }
+h3.verso {
+   padding-top:0;
+   font-size: 1em;
+   font-weight:bold;
+   margin-bottom: 0.75em;
+   }
+/*For headings for t. p. verso*/
+
+hr {
+   margin-top:2em;
+   margin-bottom:2em;
+   height: 1.5px;
+   color: black;
+   background-color: black;
+   width:50%;
+   text-align:center;
+   margin-left: 25%;
+   margin-right: 25%;
+   }
+hr.small {
+   margin-top:1.25em;
+   margin-bottom:1.25em;
+   height: 1.5px;
+   color: black;
+   background-color: black;
+   width:10%;
+   text-align:center;
+   margin-left: 45%;
+   margin-right: 45%;
+   }
+hr.med {
+   margin-top:1.25em;
+   margin-bottom:1.25em;
+   height: 1.5px;
+   color: black;
+   background-color: black;
+   width:20%;
+   text-align:center;
+   margin-left: 40%;
+   margin-right: 40%;
+   }
+
+table {
+    padding-top:0.0em;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left:0%;
+    padding-right:0%;
+    margin-bottom:1em;
+    border: none;
+    }
+.tdl {
+    text-align: left;
+    vertical-align: top;
+    padding-bottom: 0.5em;
+    font-size:85%;
+    padding-left:1em;
+    text-indent: -1em;
+    margin-left: 1em;
+    }
+.tdc {
+    text-align:center;
+    vertical-align:bottom;
+    padding-bottom: 0.5em;
+    font-size:85%;
+    }
+
+.pagenum {
+    position: absolute;
+    left: 90%;
+    font-size:0.75em;
+    text-align: right;
+    font-style: normal;
+    display: inline;
+    }
+/*For consistent placement in html file, only place in dialogue, regular paras, etc. [NOT stage direction, "no indent" paras, etc.] */
+
+p {
+   text-align: justify;
+   line-height:125%;
+   text-indent: 1.5em;
+   margin-top: 0.75em;
+   margin-bottom: 0.75em;
+   }
+p.tp {
+   margin-top:1.5em;
+   }
+p.scene {
+   margin-left:1.5em;
+   text-indent:-1.5em;
+   }
+/*For scene description at beginning of acts*/
+p.signature {
+    padding-right:5%;
+    margin-top: 0em;
+    text-align:right;
+    }
+/*For end of introductory remarks*/
+span.name {
+   font-style: italic;
+   }
+/*For character names in stage directions, before dialogue, etc.*/
+span.name2 {
+   font-variant: small-caps;
+   font-style: normal;
+   }
+/*For character names in entrances*/
+span.stage {
+   font-size:85%;
+   font-style: normal;
+   }
+/*For decreasing font size of abbreviations for left, etc. in stage directions*/
+p.direction {
+   margin-left: 20%;
+   text-indent: -5%;
+   margin-top: 0.75em;
+   margin-bottom: 0.75em;
+   }
+p.entrance {
+   text-indent: 0;
+   margin-left: 1em;
+   margin-right: 1em;
+   text-align: center;
+   margin-top: 0.75em;
+   margin-bottom: 0.75em;
+   }
+p.end_of_act {
+   text-indent: 0;
+   text-align: center;
+   margin-top: 2.0em;
+   margin-bottom:0.25em;
+   font-size:0.85em;
+   }
+
+p.simul_top {
+   margin-bottom: 0em;
+   }
+p.simul_mid {
+   margin-top: 0em;
+   margin-bottom: 0em;
+   margin-left:6em;
+   text-indent:-4.5em;
+   text-align: left;
+   }
+p.simul_bot {
+   margin-top: 0em;
+   }
+/*For simultaneous dialogue*/
+
+.center {
+    text-align: center;
+    text-indent:0;
+    }
+.bold {
+    font-weight: bold;
+    }
+.noindent {
+    text-indent:0;
+    }
+.slightlybigfont {
+    font-size: 110%;
+    }
+.bigfont {
+    font-size: 140%;
+    }
+.biggerfont {
+    font-size: 175%;
+    }
+.smallfont {
+    font-size: 90%;
+    }
+.smallerfont {
+    font-size: 85%;
+    }
+.tinyfont {
+    font-size:75%;
+    }
+.italics {
+    font-style:italic;
+    }
+.normal {
+    font-style:normal;
+    font-variant: normal;
+    }
+.smcap {
+    font-variant: small-caps;
+    font-style:normal;
+    }
+.u {
+    text-decoration: underline;
+    }
+.pagebreak {
+    page-break-before:always;
+    }
+
+div.tnote {
+    padding-bottom:0.5em;
+    padding-top:0.5em;
+    padding-left:0.5em;
+    padding-right:0.5em;
+    margin-left: 1em;
+    margin-top: 0.5em;
+    font-size: 90%;
+    background: #eeeeee;
+    border: solid 1px;
+    }
+h3.tnote {
+    font-style:italic;
+    font-size: 110%;
+    font-weight: bold;
+    padding-top:0.5em;
+    }
+li {
+    margin-bottom: 0.5em;
+    }
+
+</style>
+</head>
+<body>
+
+  <div class="image">
+    <p class="center"><img alt="Cover" src="images/cover.jpg" title="Cover"  /></p>
+
+    <div class="pagebreak"></div>
+
+    <p class="center"><img alt="Cover" src="images/illus1.jpg" title="illus1"  /></p>
+
+    <div class="pagebreak"></div>
+
+  </div>
+
+  <div class="text">
+    <p class="center">THE MINOR DRAMA.</p>
+
+    <p class="center smallfont">No. XXI.</p>
+
+    <hr class="med"/>
+
+    <p class="center biggerfont">BOX AND COX.</p>
+
+    <p class="center italics slightlybigfont tp">A Romance of Real Life</p>
+
+    <p class="center smallerfont tp">IN ONE ACT.</p>
+
+    <p class="center tp">BY JOHN MADDISON MORTON, ESQ.</p>
+
+    <p class="center smallerfont tp">WITH THE STAGE BUSINESS, CAST OF CHARACTERS, COSTUMES, RELATIVE POSITIONS, &amp;c.</p>
+
+    <hr />
+
+    <p class="center">NEW YORK:</p>
+
+    <p class="center">DOUGLAS, NO. 11 SPRUCE ST</p>
+
+    <p class="center tinyfont">AND FOR SALE BY ALL BOOKSELLERS.</p>
+
+    <p class="center">1848.</p>
+
+    <div class="pagebreak"></div>
+
+    <p><span class="pagenum"><a class="newpage" id="page-4">[Pg 4]</a></span></p>
+
+    <p><br />
+    <br /></p>
+
+    <h3 id="cast" class="verso">CAST OF CHARACTERS.</h3>
+
+    <div class="center">
+      <table border="0" cellpadding="2" cellspacing="2" summary="Cast">
+        <tbody>
+          <tr>
+            <td class="tdl">&nbsp;&nbsp;&nbsp;</td>
+            <td class="tdl">&nbsp;&nbsp;</td>
+            <td class="tdc"><i>Theatre,<br />London,</i> 1847.</td>
+            <td class="tdc"><i>Olympic,</i><br />1848.</td>
+            <td class="tdc"><i>Palmo’s,</i><br />1848.</td>
+          </tr>
+
+          <tr>
+            <td class="tdl"><i>John Box, a Journeyman Printer,</i></td>
+            <td class="tdl">&nbsp;&nbsp;</td>
+            <td class="tdl">Mr. Buckstone.</td>
+            <td class="tdl">Mr. Holland.</td>
+            <td class="tdl">Mr. Povey.</td>
+          </tr>
+
+           <tr>
+            <td class="tdl"><i>James Cox, a Journeyman Hatter,</i></td>
+            <td class="tdl">&nbsp;&nbsp;</td>
+            <td class="tdl">&nbsp;“&nbsp;&nbsp;Harley.</td>
+            <td class="tdl">&nbsp;“&nbsp;&nbsp;Conover.</td>
+            <td class="tdl">&nbsp;“&nbsp;&nbsp;Chapman.</td>
+          </tr>
+
+           <tr>
+            <td class="tdl"><i>Mrs. Bouncer,</i></td>
+            <td class="tdl">&nbsp;&nbsp;</td>
+            <td class="tdl">Mrs. M’Namara.</td>
+            <td class="tdl">Mrs. Henry.</td>
+            <td class="tdl">Mrs. Vernon.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <hr class="small"/>
+
+    <h3 id="costumes" class="verso">COSTUMES.</h3>
+
+    <p class="scene">BOX.—Small swallow-tailed black coat, short buff waistcoat, light drab trowsers short, turned up at bottom, black stockings, white canvass boots with black tips, cotton neckcloth, shabby black hat.</p>
+
+    <p class="scene">COX.—Brown Newmarket coat, long white waistcoat, dark plaid trowsers, boots, white hat, black stock.</p>
+
+    <p class="scene">MRS. BOUNCER.—Coloured cotton gown, apron, cap, &amp;c.</p>
+
+    <hr class="small"/>
+
+    <p class="center">First produced at the Royal Lyceum Theatre, November&nbsp;1st,&nbsp;1847</p>
+
+    <p class="center">Time in Representation—35 Minutes.</p>
+
+    <hr class="small"/>
+
+    <p class="center">EXITS AND ENTRANCES.</p>
+
+    <p class="center">R.&nbsp;means&nbsp;<i>Right;</i> L.&nbsp;<i>Left;</i> R.&nbsp;D.&nbsp;<i>Right&nbsp;Door;</i> L.&nbsp;D.&nbsp;<i>Left&nbsp;Door;</i> S.&nbsp;E.&nbsp;<i>Second&nbsp;Entrance;</i> U.&nbsp;E.&nbsp;<i>Upper&nbsp;Entrance;</i> M.&nbsp;D.&nbsp;<i>Middle&nbsp;Door.</i></p>
+
+    <p class="center">RELATIVE POSITIONS.</p>
+
+    <p class="center">R.,&nbsp;means&nbsp;<i>Right;</i> L.,&nbsp;<i>Left;</i> C.,&nbsp;<i>Centre;</i> R.&nbsp;C.,&nbsp;<i>Right&nbsp;of&nbsp;Centre;</i> L.&nbsp;C.,&nbsp;<i>Left&nbsp;of&nbsp;Centre.</i></p>
+
+    <div class="pagebreak"></div>
+
+    <p><span class="pagenum"><a class="newpage" id="page-5">[Pg 5]</a></span></p>
+
+    <p><br />
+    <br /></p>
+
+    <p class="center biggerfont">BOX AND COX.</p>
+
+    <hr class="small"/>
+
+    <p class="center bigfont">ACT I.</p>
+
+    <p class="scene"><span class="smcap">Scene I</span>—<i>A Room, decently furnished. At <span class="stage">C.,</span> a bed, with curtains closed, at <span class="stage">L.&nbsp;C.,</span> a door, at <span class="stage">L.&nbsp;3<i>d</i>&nbsp;E.,</span> a door, at <span class="stage">L.&nbsp;S.&nbsp;E.,</span> a chest of drawers, at back, <span class="stage">R.,</span> a window, at <span class="stage">R.&nbsp;3<i>d</i>&nbsp;E.,</span> a door, at <span class="stage">R.&nbsp;S.&nbsp;E.,</span> a fireplace, with mantel-piece, table and chairs, a few common ornaments on chimney-piece. <span class="name2">Cox,</span> dressed, with the exception of his coat, is looking at himself in a small looking-glass, which is in his hand.</i></p>
+
+    <p><span class="name">Cox.</span> I’ve half a mind to register an oath that I’ll never have my hair cut again! [<i>His hair is very short.</i>] I look as if I had just been cropped for the militia! And I was particularly emphatic in my instructions to the hair-dresser, only to cut the ends off. He must have thought I meant the other ends! Never mind—I shan’t meet anybody to care about so early. Eight o’clock, I declare! I haven’t a moment to lose. Fate has placed me with the most punctual, particular, and peremptory of hatters, and I must fulfil my destiny. [<i>Knock at <span class="stage">L.&nbsp;D.</span></i>] Open locks, whoever knocks!</p>
+
+    <p class="entrance italics">Enter <span class="name2">Mrs. Bouncer,</span> <span class="stage">L.</span></p>
+
+    <p><span class="name">Mrs. B.</span> Good-morning, Mr. Cox. I hope you slept comfortably, Mr. Cox?</p>
+
+    <p><span class="name">Cox.</span> I can’t say I did, Mrs. B. I should feel obliged to you, if you could accommodate me with a more protuberant bolster, Mrs. B. The one I’ve got now seems to me to have about a handful and a half of feathers at each end, and nothing whatever in the middle.</p>
+
+    <p><span class="name">Mrs. B.</span> Anything to accommodate you, Mr. Cox.</p>
+
+    <p><span class="name">Cox.</span> Thank you. Then, perhaps, you’ll be good enough to hold this glass, while I finish my toilet.</p>
+
+    <p><span class="name">Mrs. B.</span> Certainly. [<i>Holding glass before <span class="name">Cox,</span> who ties his cravat.</i>] Why, I do declare, you’ve had your hair cut.</p>
+
+    <p><span class="name">Cox.</span> Cut? It strikes me I’ve had it mowed! It’s very kind of you to mention it, but I’m sufficiently<span class="pagenum"><a class="newpage" id="page-6">[Pg 6]</a></span> conscious of the absurdity of my personal appearance already. [<i>Puts on his coat.</i>] Now for my hat. [<i>Puts on his hat, which comes over his eyes.</i>] That’s the effect of having one’s hair cut. This hat fitted me quite tight before. Luckily I’ve got two or three more. [<i>Goes in at <span class="stage">L.,</span> and returns, with three hats of different shapes, and puts them on, one after the other—all of which are too big for him.</i>] This is pleasant! Never mind. This one appears to me to wabble about rather less than the others—[<i>Puts on hat,</i>]—and now I’m off! By the bye, Mrs. Bouncer, I wish to call your attention to a fact that has been evident to me for some time past—and that is, that my coals go remarkably fast—</p>
+
+    <p><span class="name">Mrs. B.</span> Lor, Mr. Cox!</p>
+
+    <p><span class="name">Cox.</span> It is not the case only with the coals, Mrs. Bouncer, but I’ve lately observed a gradual and steady increase of evaporation among my candles, wood, sugar, and lucifer matches.</p>
+
+    <p><span class="name">Mrs. B.</span> Lor, Mr. Cox! you surely don’t suspect me?</p>
+
+    <p><span class="name">Cox.</span> I don’t say I do, Mrs. B.; only I wish you distinctly to understand, that I don’t believe it’s the cat.</p>
+
+    <p><span class="name">Mrs. B.</span> Is there anything else you’ve got to grumble about, sir?</p>
+
+    <p><span class="name">Cox.</span> Grumble! Mrs. Bouncer, do you possess such a thing as a dictionary?</p>
+
+    <p><span class="name">Mrs. B.</span> No, sir.</p>
+
+    <p><span class="name">Cox.</span> Then I’ll lend you one—and if you turn to the letter G, you’ll find “Grumble, verb neuter—to complain without a cause.” Now that’s not my case, Mrs. B., and now that we are upon the subject, I wish to know how it is that I frequently find my apartment full of smoke?</p>
+
+    <p><span class="name">Mrs. B.</span> Why—I suppose the chimney—</p>
+
+    <p><span class="name">Cox.</span> The chimney doesn’t smoke tobacco. I’m speaking of tobacco smoke, Mrs. B. I hope, Mrs. Bouncer, <i>you’re</i> not guilty of cheroots or Cubas?</p>
+
+    <p><span class="name">Mrs. B.</span> Not I, indeed, Mr. Cox.</p>
+
+    <p><span class="name">Cox.</span> Nor partial to a pipe?</p>
+
+    <p><span class="name">Mrs. B.</span> No, sir.</p>
+
+    <p><span class="name">Cox.</span> Then, how is it that—</p>
+
+    <p><span class="name">Mrs. B.</span> Why—I suppose—yes—that must be it—</p>
+
+    <p><span class="name">Cox.</span> At present I am entirely of your opinion—because I haven’t the most distant particle of an idea what you mean.</p>
+
+    <p><span class="pagenum"><a class="newpage" id="page-7">[Pg 7]</a></span></p>
+
+    <p><span class="name">Mrs. B.</span> Why the gentleman who has got the attics, is hardly ever without a pipe in his mouth—and there he sits, with his feet upon the mantel-piece—</p>
+
+    <p><span class="name">Cox.</span> The mantel piece! That strikes me as being a considerable stretch, either of your imagination, Mrs. B., or the gentleman’s legs. I presume you mean the fender or the hob.</p>
+
+    <p><span class="name">Mrs. B.</span> Sometimes one, sometimes t’other. Well, there he sits for hours, and puffs away into the fire-place.</p>
+
+    <p><span class="name">Cox.</span> Ah, then you mean to say that this gentleman’s smoke, instead of emulating the example of all other sorts of smoke, and going <i>up</i> the chimney, thinks proper to affect a singularity by taking the contrary direction?</p>
+
+    <p><span class="name">Mrs. B.</span> Why—</p>
+
+    <p><span class="name">Cox.</span> Then, I suppose, the gentleman you are speaking of, is the same individual that I invariably meet coming up stairs when I’m going down, and going down stairs when I’m coming up!</p>
+
+    <p><span class="name">Mrs. B.</span> Why—yes—I—</p>
+
+    <p><span class="name">Cox.</span> From the appearance of his outward man, I should unhesitatingly set him down as a gentleman connected with the printing interest.</p>
+
+    <p><span class="name">Mrs. B.</span> Yes, sir—and a very respectable young gentleman he is.</p>
+
+    <p><span class="name">Cox.</span> Well, good-morning, Mrs. Bouncer!</p>
+
+    <p><span class="name">Mrs. B.</span> You’ll be back at your usual time, I suppose, sir?</p>
+
+    <p><span class="name">Cox.</span> Yes—nine o’clock. You needn’t light my fire in future, Mrs. B.—I’ll do it myself. Don’t forget the bolster! [<i>Going, stops.</i>] A halfpenny worth of milk, Mrs. Bouncer—and be good enough to let it stand—I wish the cream to accumulate.</p>
+
+    <p class="direction">[<i>Exit at <span class="stage">L.&nbsp;C.</span></i></p>
+
+    <p><span class="name">Mrs. B.</span> He’s gone at last! I declare I was all in a tremble for fear Mr. Box would come in before Mr. Cox went out. Luckily, they’ve never met yet—and what’s more, they’re not very likely to do so; for Mr. Box is hard at work at a newspaper office all night, and doesn’t come home till the morning, and Mr. Cox is busy making hats all day long, and doesn’t come home till night; so that I’m getting double rent for my room, and neither of my lodgers are any the wiser for it. It was a capital idea of mine—that it was! But I haven’t an instant to lose. First of all, let me put Mr. Cox’s things out of Mr. Box’s<span class="pagenum"><a class="newpage" id="page-8">[Pg 8]</a></span> way. [<i>She takes the three hats, <span class="name">Cox’s</span> dressing gown and slippers, opens door at <span class="stage">L.</span> and puts them in, then shuts door and locks it.</i>] Now, then, to put the key where Mr. Cox always finds it. [<i>Puts the key on the ledge of the door, <span class="stage">L.</span></i>] I really must beg Mr. Box not to smoke so much. I was so dreadfully puzzled to know what to say when Mr. Cox spoke about it. Now, then, to make the bed—and don’t let me forget that what’s the head of the bed for Mr. Cox, becomes the foot of the bed for Mr. Box—people’s tastes do differ so. [<i>Goes behind the curtains of the bed, and seems to be making it—then appears with a very thin bolster in her hand.</i>] The idea of Mr. Cox presuming to complain of such a bolster as this! [<i>She disappears again, behind curtains.</i>]</p>
+
+    <p><span class="name">Box.</span> [<i>Without.</i>] Pooh—pooh! Why don’t you keep your own side of the staircase, sir? [<i>Enters at back, dressed as a Printer. Puts his head out at door again, shouting.</i>] It was as much your fault as mine, sir! I say, sir—it was as much your fault as mine, sir!</p>
+
+    <p><span class="name">Mrs. B.</span> [<i>Emerging from behind the curtains of bed.</i>] Lor, Mr. Box! what is the matter?</p>
+
+    <p><span class="name">Box.</span> Mind your own business, Bouncer!</p>
+
+    <p><span class="name">Mrs. B.</span> Dear, dear, Mr. Box! what a temper you are in, to be sure! I declare you’re quite pale in the face!</p>
+
+    <p><span class="name">Box.</span> What colour would you have a man be, who has been setting up long leaders for a daily paper all night?</p>
+
+    <p><span class="name">Mrs. B.</span> But, then, you’ve all the day to yourself.</p>
+
+    <p><span class="name">Box.</span> [<i>Looking significantly at <span class="name">Mrs. Bouncer.</span></i>] So it seems! Far be it from me, Bouncer, to hurry your movements, but I think it right to acquaint you with my immediate intention of divesting myself of my garments, and going to bed.</p>
+
+    <p><span class="name">Mrs. B.</span> Oh, Mr. Box!</p>
+
+    <p class="direction">[<i>Going.</i></p>
+
+    <p><span class="name">Box.</span> Stop! Can you inform me who the individual is that I invariably encounter going down stairs when I’m coming up, and coming up stairs when I’m going down?</p>
+
+    <p><span class="name">Mrs. B.</span> [<i>Confused.</i>] Oh—yes—the gentleman in the attic, sir.</p>
+
+    <p><span class="name">Box.</span> Oh! There’s nothing particularly remarkable about him, except his hats. I meet him in all sorts of hats—white hats and black hats—hats with broad brims, and hats with narrow brims—hats with naps, and hats without naps—in short, I have come to the conclusion, that he<span class="pagenum"><a class="newpage" id="page-9">[Pg 9]</a></span> must be individually and professionally associated with the hatting interest.</p>
+
+    <p><span class="name">Mrs. B.</span> Yes, sir. And, by the bye, Mr. Box, he begged me to request of you, as a particular favor, that you would not smoke quite so much.</p>
+
+    <p><span class="name">Box.</span> Did he? Then you may tell the gentle hatter, with my compliments, that if he objects to the effluvia of tobacco, he had better domesticate himself in some adjoining parish.</p>
+
+    <p><span class="name">Mrs. B.</span> Oh, Mr. Box! You surely wouldn’t deprive me of a lodger?</p>
+
+    <p class="direction">[<i>Pathetically.</i></p>
+
+    <p><span class="name">Box.</span> It would come to precisely the same thing, Bouncer, because if I detect the slightest attempt to put my pipe out, I at once give you warning that I shall give you warning at once.</p>
+
+    <p><span class="name">Mrs. B.</span> Well, Mr. Box—do you want anything more of me?</p>
+
+    <p><span class="name">Box.</span> On the contrary—I’ve had quite enough of you!</p>
+
+    <p><span class="name">Mrs. B.</span> Well, if ever! What next, I wonder?</p>
+
+    <p class="direction">[<i>Goes out at <span class="stage">L.&nbsp;C.,</span> slamming door after her.</i></p>
+
+    <p><span class="name">Box.</span> It’s quite extraordinary, the trouble I always have to get rid of that venerable female! She knows I’m up all night, and yet she seems to set her face against my indulging in a horizontal position by day. Now, let me see—shall I take my nap before I swallow my breakfast, or shall I take my breakfast before I swallow my nap—I mean, shall I swallow my nap before—no—never mind! I’ve got a rasher of bacon somewhere—[<i>Feeling in his pockets</i>]—I’ve the most distinct and vivid recollection of having purchased a rasher of bacon—Oh, here it is—[<i>Produces it, wrapped in paper, and places it on table.</i>]—and a penny roll. The next thing is to light the fire. Where are my lucifers? [<i>Looking on mantel-piece <span class="stage">R.,</span> and taking box, opens it.</i>] Now, ’pon my life, this is too bad of Bouncer—this is, by several degrees, too bad! I had a whole box full, three days ago, and now there’s only one! I’m perfectly aware that she purloins my coals and my candles, and my sugar—but I did think—oh, yes, I did think that my lucifers would be sacred! [<i>Takes candlestick off the mantel-piece, <span class="stage">R.,</span> in which there is a very small end of candle—looks at it.</i>] Now I should like to ask any unprejudiced person or persons their opinion touching this candle. In the first place, a candle is an article that I don’t require,<span class="pagenum"><a class="newpage" id="page-10">[Pg 10]</a></span> because I’m only at home in the day time—and I bought this candle on the first of May—Chimney-sweepers’ Day—calculating that it would last me three months, and here’s one week not half over, and the candle three parts gone! [<i>Lights the fire—then takes down a gridiron, which is hanging over the fireplace, <span class="stage">R.</span></i>] Mrs. Bouncer has been using my gridiron! The last article of consumption that I cooked upon it was a pork chop, and now it is powerfully impregnated with the odour of red herrings! [<i>Places gridiron on fire, and then, with a fork, lays rasher of bacon on the gridiron.</i>] How sleepy I am, to be sure! I’d indulge myself with a nap, if there was anybody here to superintend the turning of my bacon. [<i>Yawning again.</i>] Perhaps it will turn itself. I must lie down—so, here goes. [<i>Lies on the bed, closing the curtains round him—after a short pause—</i></p>
+
+    <p class="entrance italics">Enter <span class="name2">Cox,</span> hurriedly, <span class="stage">L.&nbsp;C.</span></p>
+
+    <p><span class="name">Cox.</span> Well, wonders will never cease! Conscious of being eleven minutes and a half behind time, I was sneaking into the shop, in a state of considerable excitement, when my venerable employer, with a smile of extreme benevolence on his aged countenance, said to me—“Cox, I shan’t want you to-day—you can have a holiday.”—Thoughts of “Gravesend and back—fare, One Shilling,” instantly suggested themselves, intermingled with visions of “Greenwich for Fourpence!” Then came the Twopenny Omnibuses, and the Halfpenny boats—in short, I’m quite bewildered! However, I must have my breakfast first—that’ll give me time to reflect. I’ve bought a mutton chop, so I shan’t want any dinner. [<i>Puts chop on table.</i>] Good gracious! I’ve forgot the bread. Holloa! what’s this? A roll, I declare! Come, that’s lucky! Now, then, to light the fire. Holloa—[<i>Seeing the lucifer-box on table,</i>]—who presumes to touch my box of lucifers? Why, it’s empty! I left one in it—I’ll take my oath I did. Heydey! why, the fire <i>is</i> lighted! Where’s the gridiron? <i>On</i> the fire, I declare! And what’s that on it? Bacon? Bacon it is! Well, now, ’pon my life, there is a quiet coolness about Mrs. Bouncer’s proceedings that’s almost amusing. She takes my last lucifer—my coals, and my gridiron, to cook her breakfast by! No, no—I can’t stand this! Come out of that! [<i>Pokes fork into bacon, and puts it on a plate on the table, then places his chop on the gridiron,</i><span class="pagenum"><a class="newpage" id="page-11">[Pg 11]</a></span> <i>which he puts on the fire.</i>] Now, then, for my breakfast things. [<i>Taking key, hung up, <span class="stage">L.,</span> opens door <span class="stage">L.</span> and goes out, slamming the door after him, with a loud noise.</i></p>
+
+    <p><span class="name">Box.</span> [<i>Suddenly showing his head from behind the curtains.</i>] Come in! if it’s you, Mrs. Bouncer—you needn’t be afraid. I wonder how long I’ve been asleep? [<i>Suddenly recollecting.</i>] Goodness gracious—my bacon! [<i>Leaps off bed, and runs to the fireplace.</i>] Holloa! what’s this? A chop! Whose chop? Mrs. Bouncer’s, I’ll be bound.—She thought to cook her breakfast while I was asleep—with <i>my</i> coals, too—and my gridiron! Ha, ha! But where’s my bacon? [<i>Seeing it on table.</i>] Here it is. Well, ’pon my life, Bouncer’s going it! And shall I curb my indignation? Shall I falter in my vengeance? No! [<i>Digs the fork into the chop, opens window, and throws chop out—shuts window again.</i>] So much for Bouncer’s breakfast, and now for my own! [<i>With the fork he puts the bacon on the gridiron again.</i>] I may as well lay my breakfast things.—[<i>Goes to mantel-piece at <span class="stage">R.,</span> takes key out of one of the ornaments, opens door at <span class="stage">R.</span> and exit, slamming door after him.</i></p>
+
+    <p><span class="name">Cox.</span> [<i>Putting his head in quickly at <span class="stage">L.</span></i>] Come in—come in! [<i>Opens door, <span class="stage">L.&nbsp;C.</span> Enters with a small tray, on which are tea things, &amp;c., which he places on drawers, <span class="stage">L.</span> and suddenly recollects.</i>] Oh, goodness! my chop! [<i>Running to fireplace.</i>] Holloa—what’s that? The bacon again! Oh, pooh! Zounds—confound it—dash it—damn it—I can’t stand this! [<i>Pokes fork into bacon, opens window, and flings it out, shuts window again, returns to drawers for tea things, and encounters <span class="name">Box</span> coming from his cupboard with his tea things—they walk down <span class="stage">C.</span> of stage together.</i>] Who are you, sir?</p>
+
+    <p><span class="name">Box.</span> If you come to that—who are <i>you?</i></p>
+
+    <p><span class="name">Cox.</span> What do you want here, sir?</p>
+
+    <p><span class="name">Box.</span> If you come to that—what do <i>you</i> want?</p>
+
+    <p><span class="name">Cox.</span> [<i>Aside.</i>] It’s the printer! [<i>Puts tea-things on the drawers.</i></p>
+
+    <p><span class="name">Box.</span> [<i>Aside.</i>] It’s the hatter! [<i>Puts tea-things on table.</i></p>
+
+    <p><span class="name">Cox.</span> Go to your attic, sir—</p>
+
+    <p><span class="name">Box.</span> <i>My</i> attic, sir? <i>Your</i> attic, sir!</p>
+
+    <p><span class="name">Cox.</span> Printer, I shall do you a frightful injury, if you don’t instantly leave my apartment.</p>
+
+    <p><span class="name">Box.</span> <i>Your</i> apartment? You mean <i>my</i> apartment, you contemptible hatter, you!</p>
+
+    <p><span class="pagenum"><a class="newpage" id="page-12">[Pg 12]</a></span></p>
+
+    <p><span class="name">Cox.</span> <i>Your</i> apartment? Ha! ha!—come, I like that! Look here, sir—[<i>Produces a paper out of his pocket.</i>] Mrs. Bouncer’s receipt for the last week’s rent, sir—</p>
+
+    <p><span class="name">Box.</span> [<i>Produces a paper, and holds it close to <span class="name">Cox’s</span> face.</i>] Ditto, sir!</p>
+
+    <p><span class="name">Cox.</span> [<i>Suddenly shouting.</i>] Thieves!</p>
+
+    <p><span class="name">Box.</span> Murder!</p>
+
+    <p><span class="name">Both.</span> Mrs. Bouncer! [<i>Each runs to door, <span class="stage">L.&nbsp;C.,</span> calling.</i></p>
+
+    <p class="entrance italics"><span class="name2">Mrs. Bouncer</span> runs in at door, <span class="stage">L.&nbsp;C.</span></p>
+
+    <p><span class="name">Mrs. B.</span> What is the matter? [<i><span class="name">Cox</span> and <span class="name">Box</span> seize <span class="name">Mrs. Bouncer</span> by the arm, and drag her forward.</i></p>
+
+    <p><span class="name">Box.</span> Instantly remove that hatter!</p>
+
+    <p><span class="name">Cox.</span> Immediately turn out that printer!</p>
+
+    <p><span class="name">Mrs. B.</span> Well—but, gentlemen—</p>
+
+    <p><span class="name">Cox.</span> Explain!</p>
+
+    <p class="direction">[<i>Pulling her round to him.</i></p>
+
+    <p><span class="name">Box.</span> Explain! [<i>Pulling her round to him.</i>] Whose room is this?</p>
+
+    <p><span class="name">Cox.</span> Yes, woman—whose room is this?</p>
+
+    <p><span class="name">Box.</span> Doesn’t it belong to me?</p>
+
+    <p><span class="name">Mrs. B.</span> No!</p>
+
+    <p><span class="name">Cox.</span> There! You hear, sir—it belongs to me!</p>
+
+    <p><span class="name">Mrs. B.</span> No—it belongs to both of you!</p>
+
+    <p class="direction">[<i>Sobbing.</i></p>
+
+    <p><span class="name">Cox &amp; Box.</span> Both of us?</p>
+
+    <p><span class="name">Mrs. B.</span> Oh, dear gentlemen, don’t be angry—but, you see, this gentleman—[<i>Pointing to <span class="name">Box,</span></i>]—only being at home in the daytime, and that gentleman—[<i>Pointing to <span class="name">Cox,</span></i>]—at night, I thought I might venture, until my little back second floor room was ready—</p>
+
+    <p><span class="name">Cox &amp; Box.</span> [<i>Eagerly.</i>] When will your little back second floor room be ready?</p>
+
+    <p><span class="name">Mrs. B.</span> Why, to-morrow—</p>
+
+    <p><span class="name">Cox.</span> I’ll take it!</p>
+
+    <p><span class="name">Box.</span> So will I!</p>
+
+    <p><span class="name">Mrs. B.</span> Excuse me—but if you both take it, you may just as well stop where you are.</p>
+
+    <p><span class="name">Cox &amp; Box.</span> True.</p>
+
+    <p><span class="name">Cox.</span> I spoke first, sir—</p>
+
+    <p><span class="name">Box.</span> With all my heart, sir. The little back second floor room is yours, sir—now, go—</p>
+
+    <p><span class="name">Cox.</span> Go? Pooh—pooh!</p>
+
+    <p><span class="name">Mrs. B.</span> Now don’t quarrel, gentlemen. You see, there used to be a partition here—</p>
+
+    <p><span class="pagenum"><a class="newpage" id="page-13">[Pg 13]</a></span></p>
+
+    <p><span class="name">Cox &amp; Box.</span> Then put it up!</p>
+
+    <p><span class="name">Mrs. B.</span> Nay, I’ll see if I can’t get the other room ready this very day. Now <i>do</i> keep your tempers.</p>
+
+    <p class="direction">[<i>Exit, <span class="stage">L.</span></i></p>
+
+    <p><span class="name">Cox.</span> What a disgusting position!</p>
+
+    <p class="direction">[<i>Walking rapidly round stage.</i></p>
+
+    <p><span class="name">Box.</span> [<i>Sitting down on chair, at one side of table, and following <span class="name">Cox’s</span> movements.</i>] Will you allow me to observe, if you have not had any exercise to-day, you’d better go out and take it.</p>
+
+    <p><span class="name">Cox.</span> I shall not do anything of the sort, sir.</p>
+
+    <p class="direction">[<i>Seating himself at the table opposite <span class="name">Box.</span></i></p>
+
+    <p><span class="name">Box.</span> Very well, sir.</p>
+
+    <p><span class="name">Cox.</span> Very well, sir! However, don’t let me prevent <i>you</i> from going out.</p>
+
+    <p><span class="name">Box.</span> Don’t flatter yourself, sir. [<i><span class="name">Cox</span> is about to break a piece of the roll off.</i>] Holloa! that’s my roll, sir— [<i>Snatches it away—puts a pipe in his mouth, lights it with a piece of tinder—and puffs smoke across to <span class="name">Cox.</span></i></p>
+
+    <p><span class="name">Cox.</span> Holloa! What are you about, sir?</p>
+
+    <p><span class="name">Box.</span> What am I about? I’m about to smoke.</p>
+
+    <p><span class="name">Cox.</span> Wheugh!</p>
+
+    <p class="direction">[<i>Goes and opens window at <span class="name">Box’s</span> back.</i></p>
+
+    <p><span class="name">Box.</span> Holloa! [<i>Turns round.</i>] Put down that window, sir!</p>
+
+    <p><span class="name">Cox.</span> Then put your pipe out, sir!</p>
+
+    <p><span class="name">Box.</span> There!</p>
+
+    <p class="direction">[<i>Puts pipe on table.</i></p>
+
+    <p><span class="name">Cox.</span> There!</p>
+
+    <p class="direction">[<i>Slams down window and re-seats himself.</i></p>
+
+    <p><span class="name">Box.</span> I shall retire to my pillow. [<i>Goes up, takes off his jacket, then goes towards bed, and sits down upon it, <span class="stage">L.&nbsp;C.</span></i></p>
+
+    <p><span class="name">Cox.</span> [<i>Jumps up, goes to bed, and sits down on <span class="stage">R.</span> of <span class="name">Box.</span></i>] I beg your pardon, sir—I cannot allow any one to rumple my bed. [<i>Both rising.</i>]</p>
+
+    <p><span class="name">Box.</span> <i>Your</i> bed? Hark ye, sir—can you fight?</p>
+
+    <p><span class="name">Cox.</span> No, sir.</p>
+
+    <p><span class="name">Box.</span> No? Then come on—</p>
+
+    <p class="direction">[<i>Sparring at <span class="name">Cox.</span></i></p>
+
+    <p><span class="name">Cox.</span> Sit down, sir—or I’ll instantly vociferate “Police!”</p>
+
+    <p><span class="name">Box.</span> [<i>Seats himself—<span class="name">Cox</span> does the same.</i>] I say, sir——</p>
+
+    <p><span class="name">Cox.</span> Well, sir?</p>
+
+    <p><span class="name">Box.</span> Although we are doomed to occupy the same room for a few hours longer, I don’t see any necessity for our cutting each other’s throats, sir.</p>
+
+    <p><span class="name">Cox.</span> Not at all. It’s an operation that I should decidedly object to.</p>
+
+    <p><span class="name">Box.</span> And, after all, I’ve no violent animosity to you, sir.</p>
+
+    <p><span class="name">Cox.</span> Nor have I any rooted antipathy to you, sir.</p>
+
+    <p><span class="pagenum"><a class="newpage" id="page-14">[Pg 14]</a></span></p>
+
+    <p><span class="name">Box.</span> Besides, it was all Mrs. Bouncer’s fault, sir.</p>
+
+    <p><span class="name">Cox.</span> Entirely, sir. [<i>Gradually approaching chairs.</i>]</p>
+
+    <p><span class="name">Box.</span> Very well, sir!</p>
+
+    <p><span class="name">Cox.</span> Very well, sir! [<i>Pause.</i>]</p>
+
+    <p><span class="name">Box.</span> Take a bit of roll, sir?</p>
+
+    <p><span class="name">Cox.</span> Thank ye, sir. [<i>Breaking a bit off. Pause.</i>]</p>
+
+    <p><span class="name">Box.</span> Do you sing, sir?</p>
+
+    <p><span class="name">Cox.</span> I sometimes join in a chorus.</p>
+
+    <p><span class="name">Box.</span> Then give us a chorus. [<i>Pause.</i>] Have you seen the Bosjemans, sir?</p>
+
+    <p><span class="name">Cox.</span> No, sir—my wife wouldn’t let me.</p>
+
+    <p><span class="name">Box.</span> Your <i>wife!</i></p>
+
+    <p><span class="name">Cox.</span> That is—my <i>intended</i> wife.</p>
+
+    <p><span class="name">Box.</span> Well, that’s the same thing! I congratulate you! [<i>Shaking hands.</i>]</p>
+
+    <p><span class="name">Cox.</span> [<i>With a deep sigh.</i>] Thank ye. [<i>Seeing <span class="name">Box</span> about to get up.</i>] You needn’t disturb yourself, sir. She won’t come here.</p>
+
+    <p><span class="name">Box.</span> Oh! I understand. You’ve got a snug little establishment of your own <i>here</i>—on the sly—cunning dog—[<i>Nudging <span class="name">Cox.</span></i>]</p>
+
+    <p><span class="name">Cox.</span> [<i>Drawing himself up.</i>] No such thing, sir—I repeat, sir—no such thing, sir, but my wife—I mean, my <i>intended</i> wife—happens to be the proprietor of a considerable number of bathing-machines——</p>
+
+    <p><span class="name">Box.</span> [<i>Suddenly.</i>] Ha! Where? [<i>Grasping <span class="name">Cox’s</span> arm.</i>]</p>
+
+    <p><span class="name">Cox.</span> At a favorite watering-place. How curious you are!</p>
+
+    <p><span class="name">Box.</span> Not at all. Well?</p>
+
+    <p><span class="name">Cox.</span> Consequently, in the bathing season—which luckily is rather a long one—we see but little of each other; but as that is now over, I am daily indulging in the expectation of being blessed with the sight of <i>my</i> beloved. [<i>Very seriously.</i>] Are <i>you</i> married?</p>
+
+    <p><span class="name">Box.</span> Me? Why—not exactly!</p>
+
+    <p><span class="name">Cox.</span> Ah—a happy bachelor!</p>
+
+    <p><span class="name">Box.</span> Why—not—precisely!</p>
+
+    <p><span class="name">Cox.</span> Oh! a—widower?</p>
+
+    <p><span class="name">Box.</span> No—not absolutely!</p>
+
+    <p><span class="name">Cox.</span> You’ll excuse me, sir—but at present I don’t exactly understand how you can help being one of the three.</p>
+
+    <p><span class="name">Box.</span> Not help it?</p>
+
+    <p><span class="name">Cox.</span> No, sir—not you, nor any other man alive!</p>
+
+    <p><span class="pagenum"><a class="newpage" id="page-15">[Pg 15]</a></span></p>
+
+    <p><span class="name">Box.</span> Ah, that may be—but I’m not alive!</p>
+
+    <p><span class="name">Cox.</span> [<i>Pushing back his chair.</i>] You’ll excuse me, sir—but I don’t like joking upon such subjects.</p>
+
+    <p><span class="name">Box.</span> I’m perfectly serious, sir. I’ve been defunct for the last three years!</p>
+
+    <p><span class="name">Cox.</span> [<i>Shouting.</i>] Will you be quiet, sir?</p>
+
+    <p><span class="name">Box.</span> If you won’t believe me, I’ll refer you to a very large, numerous, and respectable circle of disconsolate friends.</p>
+
+    <p><span class="name">Cox.</span> My dear sir—my <i>very</i> dear sir—if there does exist any ingenious contrivance whereby a man on the eve of committing matrimony can leave this world, and yet stop in it, I shouldn’t be sorry to know it.</p>
+
+    <p><span class="name">Box.</span> Oh! then I presume I’m not to set you down as being frantically attached to your intended?</p>
+
+    <p><span class="name">Cox.</span> Why, not exactly; and yet, at present, I’m only aware of one obstacle to my doating upon her, and that is, that I can’t abide her!</p>
+
+    <p><span class="name">Box.</span> Then there’s nothing more easy. Do as I did.</p>
+
+    <p><span class="name">Cox.</span> [<i>Eagerly.</i>] I will! What was it?</p>
+
+    <p><span class="name">Box.</span> Drown yourself!</p>
+
+    <p><span class="name">Cox.</span> [<i>Shouting again.</i>] Will you be quiet, sir?</p>
+
+    <p><span class="name">Box.</span> Listen to me. Three years ago it was my misfortune to captivate the affections of a still blooming, though somewhat middle-aged widow, at Ramsgate.</p>
+
+    <p><span class="name">Cox.</span> [<i>Aside.</i>] Singular enough! Just my case three months ago at Margate.</p>
+
+    <p><span class="name">Box.</span> Well, sir, to escape her importunities, I came to the determination of enlisting into the Blues, or Life Guards.</p>
+
+    <p><span class="name">Cox.</span> [<i>Aside.</i>] So did I. How very odd!</p>
+
+    <p><span class="name">Box.</span> But they wouldn’t have me—they actually had the effrontery to say that I was too short—</p>
+
+    <p><span class="name">Cox.</span> [<i>Aside.</i>] And I wasn’t tall enough!</p>
+
+    <p><span class="name">Box.</span> So I was obliged to content myself with a marching regiment—I enlisted!</p>
+
+    <p><span class="name">Cox.</span> [<i>Aside.</i>] So did I. Singular coincidence!</p>
+
+    <p><span class="name">Box.</span> I’d no sooner done so, than I was sorry for it.</p>
+
+    <p><span class="name">Cox.</span> [<i>Aside.</i>] So was I.</p>
+
+    <p><span class="name">Box.</span> My infatuated widow offered to purchase my discharge, on condition that I’d lead her to the altar.</p>
+
+    <p><span class="name">Cox.</span> [<i>Aside.</i>] Just my case!</p>
+
+    <p><span class="name">Box.</span> I hesitated—at last I consented.</p>
+
+    <p><span class="name">Cox.</span> [<i>Aside.</i>] I consented at once!</p>
+
+    <p><span class="pagenum"><a class="newpage" id="page-16">[Pg 16]</a></span></p>
+
+    <p><span class="name">Box.</span> Well, sir—the day fixed for the happy ceremony at length drew near—in fact, too near to be pleasant—so I suddenly discovered that I wasn’t worthy to possess her, and I told her so—when, instead of being flattered by the compliment, she flew upon me like a tiger of the female gender—I rejoined—when suddenly something whizzed past me, within an inch of my ear, and shivered into a thousand fragments against the mantel-piece—it was the slop-basin. I retaliated with a tea-cup—we parted, and the next morning I was served with a notice of action for breach of promise.</p>
+
+    <p><span class="name">Cox.</span> Well, sir?</p>
+
+    <p><span class="name">Box.</span> Well, sir—ruin stared me in the face—the action proceeded against me with gigantic strides—I took a desperate resolution—I left my home early one morning, with one suit of clothes on my back, and another tied up in a bundle, under my arm—I arrived on the cliffs—opened my bundle—deposited the suit of clothes on the very verge of the precipice—took one look down into the yawning gulph beneath me, and walked off in the opposite direction.</p>
+
+    <p><span class="name">Cox.</span> Dear me! I think I begin to have some slight perception of your meaning. Ingenious creature! You disappeared—the suit of clothes were found—</p>
+
+    <p><span class="name">Box.</span> Exactly—and in one of the pockets of the coat, or the waistcoat, or the pantaloons—I forget which—there was also found a piece of paper, with these affecting farewell words: “This is thy work, oh, Penelope Ann!”</p>
+
+    <p><span class="name">Cox.</span> Penelope Ann! [<i>Starts up, takes <span class="name">Box</span> by the arm, and leads him slowly to front of stage.</i>] Penelope Ann?</p>
+
+    <p><span class="name">Box.</span> Penelope Ann!</p>
+
+    <p><span class="name">Cox.</span> Originally widow of William Wiggins?</p>
+
+    <p><span class="name">Box.</span> Widow of William Wiggins!</p>
+
+    <p><span class="name">Cox.</span> Proprietor of bathing machines?</p>
+
+    <p><span class="name">Box.</span> Proprietor of bathing machines!</p>
+
+    <p><span class="name">Cox.</span> At Margate?</p>
+
+    <p><span class="name">Box.</span> And Ramsgate!</p>
+
+    <p><span class="name">Cox.</span> It must be she! And you, sir—you are Box—the lamented, long lost Box!</p>
+
+    <p><span class="name">Box.</span> I am!</p>
+
+    <p><span class="name">Cox.</span> And I was about to marry the interesting creature you so cruelly deceived.</p>
+
+    <p><span class="name">Box.</span> Ha! then you are Cox?</p>
+
+    <p><span class="name">Cox.</span> I am!</p>
+
+    <p><span class="pagenum"><a class="newpage" id="page-17">[Pg 17]</a></span></p>
+
+    <p><span class="name">Box.</span> I heard of it. I congratulate you—I give you joy! And now, I think I’ll go and take a stroll.</p>
+
+    <p class="direction">[<i>Going.</i></p>
+
+    <p><span class="name">Cox.</span> No you don’t! [<i>Stopping him.</i>] I’ll not lose sight of you till I’ve restored you to the arms of your intended.</p>
+
+    <p><span class="name">Box.</span> <i>My</i> intended? You mean <i>your</i> intended.</p>
+
+    <p><span class="name">Cox.</span> No, sir—yours!</p>
+
+    <p><span class="name">Box.</span> How can she be <i>my</i> intended, now that I’m drowned?</p>
+
+    <p><span class="name">Cox.</span> You’re no such thing, sir! and I prefer presenting you to Penelope Ann.</p>
+
+    <p><span class="name">Box.</span> I’ve no wish to be introduced to your intended.</p>
+
+    <p><span class="name">Cox.</span> <i>My</i> intended? How can that be, sir? You proposed to her first!</p>
+
+    <p><span class="name">Box.</span> What of that, sir? I came to an untimely end, and you popped the question afterwards.</p>
+
+    <p><span class="name">Cox.</span> Very well, sir!</p>
+
+    <p><span class="name">Box.</span> Very well, sir!</p>
+
+    <p><span class="name">Cox.</span> You are much more worthy of her than I am, sir. Permit me, then, to follow the generous impulse of my nature—I give her up to you.</p>
+
+    <p><span class="name">Box.</span> Benevolent being! I wouldn’t rob you for the world! [<i>Going.</i>] Good morning, sir!</p>
+
+    <p><span class="name">Cox.</span> [<i>Seizing him.</i>] Stop!</p>
+
+    <p><span class="name">Box.</span> Unhand me, hatter! or I shall cast off the lamb and assume the lion!</p>
+
+    <p><span class="name">Cox.</span> Pooh!</p>
+
+    <p class="direction">[<i>Snapping his fingers close to <span class="name">Box’s</span> face.</i></p>
+
+    <p><span class="name">Box.</span> An insult! to my very face—under my very nose! [<i>Rubbing it.</i>] You know the consequences, sir—instant satisfaction, sir!</p>
+
+    <p><span class="name">Cox.</span> With all my heart, sir!</p>
+
+    <p class="direction">[<i>They go to the fire-place, <span class="stage">R.,</span> and begin ringing bells violently, and pull down bell-pulls.</i></p>
+
+    <p><span class="name">Both.</span> Mrs. Bouncer! Mrs. Bouncer!</p>
+
+    <p class="entrance italics"><span class="name2">Mrs. Bouncer</span> runs in, <span class="stage">L.&nbsp;C.</span></p>
+
+    <p><span class="name">Mrs. B.</span> What is it, gentlemen?</p>
+
+    <p><span class="name">Box.</span> Pistols for two!</p>
+
+    <p><span class="name">Mrs. B.</span> Yes, sir</p>
+
+    <p class="direction">[<i>Going.</i></p>
+
+    <p><span class="name">Cox.</span> Stop! You don’t mean to say, thoughtless and imprudent woman, that you keep loaded fire-arms in the house?</p>
+
+    <p><span class="name">Mrs. B.</span> Oh no—they’re not loaded.</p>
+
+    <p><span class="name">Cox.</span> Then produce the murderous weapons instantly!</p>
+
+    <p class="direction">[<i>Exit <span class="name">Mrs. Bouncer,</span> <span class="stage">L.&nbsp;C.</span></i></p>
+
+    <p><span class="pagenum"><a class="newpage" id="page-18">[Pg 18]</a></span></p>
+
+    <p><span class="name">Box.</span> I say, sir!</p>
+
+    <p><span class="name">Cox.</span> Well, sir?</p>
+
+    <p><span class="name">Box.</span> What’s your opinion of duelling, sir?</p>
+
+    <p><span class="name">Cox.</span> I think it’s a barbarous practice, sir.</p>
+
+    <p><span class="name">Box.</span> So do I, sir. To be sure, I don’t so much object to it when the pistols are not loaded.</p>
+
+    <p><span class="name">Cox.</span> No: I dare say that <i>does</i> make some difference.</p>
+
+    <p><span class="name">Box.</span> And yet, sir—on the other hand—doesn’t it strike you as rather a waste of time, for two people to keep firing pistols at one another, with nothing in ’em?</p>
+
+    <p><span class="name">Cox.</span> No, sir—not more than any other harmless recreation.</p>
+
+    <p><span class="name">Box.</span> Hark ye! Why do you object to marry Penelope Ann?</p>
+
+    <p><span class="name">Cox.</span> Because, as I’ve observed already, I can’t abide her. You’ll be very happy with her.</p>
+
+    <p><span class="name">Box.</span> Happy! Me! With the consciousness that I have deprived <i>you</i> of such a treasure? No, no, Cox!</p>
+
+    <p><span class="name">Cox.</span> Don’t think of me, Box—I shall be sufficiently rewarded by the knowledge of my Box’s happiness.</p>
+
+    <p><span class="name">Box.</span> Don’t be absurd, sir!</p>
+
+    <p><span class="name">Cox.</span> Then don’t you be ridiculous, sir!</p>
+
+    <p><span class="name">Box.</span> I won’t have her!</p>
+
+    <p><span class="name">Cox.</span> I won’t have her!</p>
+
+    <p><span class="name">Box.</span> I have it! Suppose we draw lots for the lady—eh, Mr. Cox?</p>
+
+    <p><span class="name">Cox.</span> That’s fair enough, Mr. Box.</p>
+
+    <p><span class="name">Box.</span> Or, what say you to dice?</p>
+
+    <p><span class="name">Cox.</span> With all my heart! Dice, by all means—[<i>Eagerly.</i>]</p>
+
+    <p><span class="name">Box.</span> [<i>Aside.</i>] That’s lucky! Mrs. Bouncer’s nephew left a pair here yesterday. He sometimes persuades me to have a throw for a trifle, and as he always throws sixes, I suspect they are good ones.</p>
+
+    <p class="direction">[<i>Goes to the cupboard at <span class="stage">R.,</span> and brings out the dice-box.</i></p>
+
+    <p><span class="name">Cox.</span> [<i>Aside.</i>] I’ve no objection at all to dice. I lost one pound, seventeen and sixpence, at last Barnet Races, to a very gentlemanly looking man, who had a most peculiar knack of throwing sixes; I suspected they were loaded, so I gave him another half-crown, and he gave me the dice.</p>
+
+    <p class="direction">[<i>Takes dice out of his pocket—uses lucifer box as substitute for dice-box, which is on table.</i> </p>
+
+    <p><span class="name">Box.</span> Now then, sir!</p>
+
+    <p><span class="pagenum"><a class="newpage" id="page-19">[Pg 19]</a></span></p>
+
+    <p><span class="name">Cox.</span> I’m ready, sir! [<i>They seat themselves at opposite sides of the table.</i>] Will you lead off, sir?</p>
+
+    <p><span class="name">Box.</span> As you please, sir. The lowest throw, of course, wins Penelope Ann?</p>
+
+    <p><span class="name">Cox.</span> Of course, sir.</p>
+
+    <p><span class="name">Box.</span> Very well, sir!</p>
+
+    <p><span class="name">Cox.</span> Very well, sir!</p>
+
+    <p><span class="name">Box.</span> [<i>Rattling dice and throwing.</i>] Sixes!</p>
+
+    <p><span class="name">Cox.</span> That’s not a bad throw of yours, sir. [<i>Rattling dice—throws.</i>] Sixes!</p>
+
+    <p><span class="name">Box.</span> That’s a pretty good one of your’s, sir. [<i>Throws.</i>] Sixes!</p>
+
+    <p><span class="name">Cox.</span> [<i>Throws.</i>] Sixes!</p>
+
+    <p><span class="name">Box.</span> Sixes!</p>
+
+    <p><span class="name">Cox.</span> Sixes!</p>
+
+    <p><span class="name">Box.</span> Sixes!</p>
+
+    <p><span class="name">Cox.</span> Sixes!</p>
+
+    <p><span class="name">Box.</span> Those are not bad dice of yours, sir.</p>
+
+    <p><span class="name">Cox.</span> Your’s seem pretty good ones, sir.</p>
+
+    <p><span class="name">Box.</span> Suppose we change?</p>
+
+    <p><span class="name">Cox.</span> Very well, sir.</p>
+
+    <p class="direction">[<i>They change dice.</i></p>
+
+    <p><span class="name">Box.</span> [<i>Throwing.</i>] Sixes!</p>
+
+    <p><span class="name">Cox.</span> Sixes!</p>
+
+    <p><span class="name">Box.</span> Sixes!</p>
+
+    <p><span class="name">Cox.</span> Sixes!</p>
+
+    <p><span class="name">Box.</span> [<i>Flings down the dice.</i>] Pooh! It’s perfectly absurd, your going on throwing sixes in this sort of way, sir.</p>
+
+    <p><span class="name">Cox.</span> I shall go on till my luck changes, sir!</p>
+
+    <p><span class="name">Box.</span> Let’s try something else. I have it! Suppose we toss for Penelope Ann?</p>
+
+    <p><span class="name">Cox.</span> The very thing I was going to propose!</p>
+
+    <p class="direction">[<i>They each turn aside and take out a handful of money.</i></p>
+
+    <p><span class="name">Box.</span> [<i>Aside, examining money.</i>] Where’s my tossing shilling? Here it is!</p>
+
+    <p class="direction">[<i>Selecting coin.</i></p>
+
+    <p><span class="name">Cox.</span> [<i>Aside, examining money.</i>] Where’s my lucky sixpence? I’ve got it!</p>
+
+    <p><span class="name">Box.</span> Now then, sir,—heads win?</p>
+
+    <p><span class="name">Cox.</span> Or tails lose—whichever you prefer.</p>
+
+    <p><span class="name">Box.</span> It’s the same to me, sir.</p>
+
+    <p><span class="name">Cox.</span> Very well, sir. Heads, I win,—tails, you lose.</p>
+
+    <p><span class="name">Box.</span> Yes—[<i>Suddenly</i>]—no. Heads win, sir.</p>
+
+    <p><span class="name">Cox.</span> Very well—go on!</p>
+
+    <p class="direction">[<i>They are standing opposite to each other.</i></p>
+
+    <p><span class="pagenum"><a class="newpage" id="page-20">[Pg 20]</a></span></p>
+
+    <p><span class="name">Box.</span> [<i>Tossing.</i>] Heads!</p>
+
+    <p><span class="name">Cox.</span> [<i>Tossing.</i>] Heads!</p>
+
+    <p><span class="name">Box.</span> [<i>Tossing.</i>] Heads!</p>
+
+    <p><span class="name">Cox.</span> [<i>Tossing.</i>] Heads!</p>
+
+    <p><span class="name">Box.</span> Ain’t you rather tired of turning up heads, sir?</p>
+
+    <p><span class="name">Cox.</span> Couldn’t you vary the monotony of our proceedings by an occasional tail, sir?</p>
+
+    <p><span class="name">Box.</span> [<i>Tossing.</i>] Heads!</p>
+
+    <p><span class="name">Cox.</span> [<i>Tossing.</i>] Heads!</p>
+
+    <p><span class="name">Box.</span> Heads? Stop, sir! Will you permit me—[<i>Taking <span class="name">Cox’s</span> sixpence.</i>] Holloa! your sixpence has got no tail, sir!</p>
+
+    <p><span class="name">Cox.</span> [<i>Seizing <span class="name">Box’s</span> shilling.</i>] And your shilling has got two heads, sir!</p>
+
+    <p><span class="name">Box.</span> Cheat!</p>
+
+    <p><span class="name">Cox.</span> Swindler! [<i>They are about to rush upon each other, then retreat to some distance, and commence sparring, and striking fiercely at one another.</i>]</p>
+
+    <p class="entrance italics">Enter <span class="name2">Mrs. Bouncer,</span> <span class="stage">L.&nbsp;H.&nbsp;C.</span></p>
+
+    <p><span class="name">Box &amp; Cox.</span> Is the little back second floor room ready?</p>
+
+    <p><span class="name">Mrs. B.</span> Not quite, gentlemen. I can’t find the pistols, but I have brought you a letter—it came by the General Post yesterday. I’m sure I don’t know how I forgot it, for I put it carefully in my pocket.</p>
+
+    <p><span class="name">Cox.</span> And you’ve kept it carefully in your pocket ever since?</p>
+
+    <p><span class="name">Mrs. B.</span> Yes, sir. I hope you’ll forgive me, sir. [<i>Going.</i>] By the bye, I paid twopence for it.</p>
+
+    <p><span class="name">Cox.</span> Did you? Then I <i>do</i> forgive you.</p>
+
+    <p class="direction">[<i>Exit <span class="name">Mrs. B.</span></i></p>
+
+    <p class="noindent">[<i>Looking at letter.</i>] “Margate.” The post-mark decidedly says “Margate.”</p>
+
+    <p><span class="name">Box.</span> Oh, doubtless a tender epistle from Penelope Ann.</p>
+
+    <p><span class="name">Cox.</span> Then read it, sir. [<i>Handing letter to <span class="name">Box.</span></i>]</p>
+
+    <p><span class="name">Box.</span> Me, sir?</p>
+
+    <p><span class="name">Cox.</span> Of course. You don’t suppose I’m going to read a letter from your intended?</p>
+
+    <p><span class="name">Box.</span> <i>My</i> intended! Pooh! It’s addressed to you—C.&nbsp;O.&nbsp;X.!</p>
+
+    <p><span class="name">Cox.</span> Do you think that’s a C.? It looks to me like a B.</p>
+
+    <p><span class="name">Box.</span> Nonsense! Fracture the seal!</p>
+
+    <p><span class="name">Cox.</span> [<i>Opens letter—starts.</i>] Goodness gracious!</p>
+
+    <p><span class="pagenum"><a class="newpage" id="page-21">[Pg 21]</a></span></p>
+
+    <p><span class="name">Box.</span> [<i>Snatching letter—starts.</i>] Gracious goodness!</p>
+
+    <p><span class="name">Cox.</span> [<i>Taking letter again.</i>] “Margate—May the 4th. Sir,—I hasten to convey to you the intelligence of a melancholy accident, which has bereft you of your intended wife.” He means <i>your</i> intended!</p>
+
+    <p><span class="name">Box.</span> No, <i>yours!</i> However, it’s perfectly immaterial—but she unquestionably was yours.</p>
+
+    <p><span class="name">Cox.</span> How can that be? You proposed to her first!</p>
+
+    <p><span class="name">Box.</span> Yes, but then you—now don’t let us begin again—Go on.</p>
+
+    <p><span class="name">Cox.</span> [<i>Resuming letter.</i>] “Poor Mrs. Wiggins went out for a short excursion in a sailing boat—a sudden and violent squall soon after took place, which, it is supposed, upset her, as she was found, two days afterwards, keel upwards.”</p>
+
+    <p><span class="name">Box.</span> Poor woman!</p>
+
+    <p><span class="name">Cox.</span> The boat, sir! [<i>Reading.</i>] “As her man of business, I immediately proceeded to examine her papers, amongst which I soon discovered her will; the following extract from which will, I have no doubt, be satisfactory to you. ‘I hereby bequeath my entire property to my intended husband.’&nbsp;” Excellent, but unhappy creature! [<i>Affected.</i>]</p>
+
+    <p><span class="name">Box.</span> Generous, ill-fated being! [<i>Affected.</i>]</p>
+
+    <p><span class="name">Cox.</span> And to think that I tossed up for such a woman!</p>
+
+    <p><span class="name">Box.</span> When I remember that I staked such a treasure on the hazard of a die!</p>
+
+    <p><span class="name">Cox.</span> I’m sure, Mr. Box, I can’t sufficiently thank you for your sympathy.</p>
+
+    <p><span class="name">Box.</span> And I’m sure, Mr. Cox, you couldn’t feel more, if she had been your own intended!</p>
+
+    <p><span class="name">Cox.</span> <i>If</i> she’d been <i>my own</i> intended? She <i>was</i> my own intended!</p>
+
+    <p><span class="name">Box.</span> <i>Your</i> intended? Come, I like that! Didn’t you very properly observe just now, sir, that I proposed to her first?</p>
+
+    <p><span class="name">Cox.</span> To which you very sensibly replied, that you’d come to an untimely end.</p>
+
+    <p><span class="name">Box.</span> I deny it!</p>
+
+    <p><span class="name">Cox.</span> I say you have!</p>
+
+    <p><span class="name">Box.</span> The fortune’s mine!</p>
+
+    <p><span class="name">Cox.</span> Mine!</p>
+
+    <p><span class="name">Box.</span> I’ll have it!</p>
+
+    <p><span class="pagenum"><a class="newpage" id="page-22">[Pg 22]</a></span></p>
+
+    <p><span class="name">Cox.</span> So will I!</p>
+
+    <p><span class="name">Box.</span> I’ll go to law!</p>
+
+    <p><span class="name">Cox.</span> So will I!</p>
+
+    <p><span class="name">Box.</span> Stop—a thought strikes me. Instead of going to law about the property, suppose we divide it.</p>
+
+    <p><span class="name">Cox.</span> Equally?</p>
+
+    <p><span class="name">Box.</span> Equally. I’ll take two thirds.</p>
+
+    <p><span class="name">Cox.</span> That’s fair enough—and I’ll take three-fourths.</p>
+
+    <p><span class="name">Box.</span> That won’t do. Half and half!</p>
+
+    <p><span class="name">Cox.</span> Agreed! There’s my hand upon it——</p>
+
+    <p><span class="name">Box.</span> And mine.</p>
+
+    <p class="direction">[<i>About to shake hands—a Postman’s knock heard at street door.</i></p>
+
+    <p><span class="name">Cox.</span> Holloa! Postman again!</p>
+
+    <p><span class="name">Box.</span> Postman yesterday—postman to-day.—</p>
+
+    <p class="entrance italics">Enter <span class="name2">Mrs. Bouncer.</span></p>
+
+    <p><span class="name">Mrs. B.</span> Another letter, Mr. Cox—twopence more!</p>
+
+    <p><span class="name">Cox.</span> I forgive you again! [<i>Taking letter.</i>] Another trifle from Margate. [<i>Opens the letter—starts.</i>] Goodness gracious!</p>
+
+    <p><span class="name">Box.</span> [<i>Snatching letter—starts.</i>] Gracious goodness!</p>
+
+    <p><span class="name">Cox.</span> [<i>Snatching letter again—reads.</i>] “Happy to inform you—false alarm”—</p>
+
+    <p><span class="name">Box.</span> [<i>Overlooking.</i>] “Sudden squall—boat upset—Mrs. Wiggins, your intended”—</p>
+
+    <p><span class="name">Cox.</span> “Picked up by a steamboat”—</p>
+
+    <p><span class="name">Box.</span> “Carried into Boulogne”—</p>
+
+    <p><span class="name">Cox.</span> “Returned here this morning”—</p>
+
+    <p><span class="name">Box.</span> “Will start by early train, to-morrow”—</p>
+
+    <p><span class="name">Cox.</span> “And be with you at ten o’clock, exact.”</p>
+
+    <p class="direction">[<i>Both simultaneously pull out their watches.</i></p>
+
+    <p><span class="name">Box.</span> Cox, I congratulate you—</p>
+
+    <p><span class="name">Cox.</span> Box, I give you joy!</p>
+
+    <p><span class="name">Box.</span> I’m sorry that most important business of the Colonial Office will prevent my witnessing the truly happy meeting between you and your intended. Good-morning!</p>
+
+    <p class="direction">[<i>Going.</i></p>
+
+    <p><span class="name">Cox.</span> [<i>Stopping him.</i>] It’s obviously for me to retire.—Not for worlds would I disturb the rapturous meeting between you and your intended. Good morning!</p>
+
+    <p><span class="name">Box.</span> You’ll excuse me, sir—but our last arrangement was, that she was <i>your</i> intended.</p>
+
+    <p><span class="pagenum"><a class="newpage" id="page-23">[Pg 23]</a></span></p>
+
+    <p><span class="name">Cox.</span> No, yours!</p>
+
+    <p><span class="name">Box.</span> Yours!</p>
+
+    <p><span class="name">Together.</span> Yours!</p>
+
+    <p class="direction">[<i>Ten o’clock strikes—noise of an omnibus.</i></p>
+
+    <p><span class="name">Box.</span> Ha! What’s that? A cab’s drawn up at the door! [<i>Running to window.</i>] No—it’s a twopenny omnibus!</p>
+
+    <p><span class="name">Cox.</span> [<i>Leaning over <span class="name">Box’s</span> shoulder.</i>] A lady’s got out—</p>
+
+    <p><span class="name">Box.</span> There’s no mistaking that majestic person—it’s Penelope Ann!</p>
+
+    <p><span class="name">Cox.</span> Your intended!</p>
+
+    <p><span class="name">Box.</span> Yours!</p>
+
+    <p><span class="name">Cox.</span> Yours!</p>
+
+    <p class="direction">[<i>Both run to door, <span class="stage">L.&nbsp;C.,</span> and eagerly listen.</i></p>
+
+    <p><span class="name">Box.</span> Hark—she’s coming up stairs!</p>
+
+    <p><span class="name">Cox.</span> Shut the door!</p>
+
+    <p class="direction">[<i>They slam the door, and both lean up against it with their backs.</i></p>
+
+    <p><span class="name">Mrs. B.</span> [<i>Without, and knocking.</i>] Mr. Cox! Mr. Cox!</p>
+
+    <p><span class="name">Cox.</span> [<i>Shouting.</i>] I’ve just stepped out!</p>
+
+    <p><span class="name">Box.</span> So have I!</p>
+
+    <p><span class="name">Mrs. B.</span> Mr. Cox! [<i>Pushing at the door—<span class="name">Cox</span> and <span class="name">Box</span> redouble their efforts to keep their door shut.</i>] Open the door! It’s only me—Mrs. Bouncer!</p>
+
+    <p><span class="name">Cox.</span> Only you? Then where’s the lady?</p>
+
+    <p><span class="name">Mrs. B.</span> Gone!</p>
+
+    <p><span class="name">Cox.</span> Upon your honour?</p>
+
+    <p><span class="name">Box.</span> As a gentleman?</p>
+
+    <p><span class="name">Mrs. B.</span> Yes, and she’s left a note for Mr. Cox.</p>
+
+    <p><span class="name">Cox.</span> Give it to me!</p>
+
+    <p><span class="name">Mrs. B.</span> Then open the door!</p>
+
+    <p><span class="name">Cox.</span> Put it under! [<i>A letter is put under the door; <span class="name">Cox</span> picks up the letter, and opens it.</i>] Goodness Gracious!</p>
+
+    <p><span class="name">Box.</span> [<i>Snatching letter.</i>] Gracious Goodness!</p>
+
+    <p class="direction">[<i><span class="name">Cox</span> snatches the letter, and runs forward, followed by <span class="name">Box.</span></i></p>
+
+    <p><span class="name">Cox.</span> [<i>Reading.</i>] “Dear Mr. Cox, pardon my candor”—</p>
+
+    <p><span class="name">Box.</span> [<i>Looking over, and reading.</i>] “But being convinced that our feelings, like our ages, do not reciprocate”—</p>
+
+    <p><span class="name">Cox.</span> “I hasten to apprise you of my immediate union”—</p>
+
+    <p><span class="name">Box.</span> “With Mr. Knox.”</p>
+
+    <p><span class="name">Cox.</span> Huzza!</p>
+
+    <p><span class="name">Box.</span> Three cheers for Knox! Ha, ha, ha!</p>
+
+    <p><span class="pagenum"><a class="newpage" id="page-24">[Pg 24]</a></span></p>
+
+    <p class="direction">[<i>Tosses the letter in the air, and begins dancing. <span class="name">Cox</span> does the same.</i></p>
+
+    <p><span class="name">Mrs. B.</span> [<i>Putting her head in at door.</i>] The little second floor back room is quite ready!</p>
+
+    <p><span class="name">Cox.</span> I don’t want it!</p>
+
+    <p><span class="name">Box.</span> No more do I!</p>
+
+    <p><span class="name">Cox.</span> What shall part us?</p>
+
+    <p><span class="name">Box.</span> What shall tear us asunder?</p>
+
+    <p><span class="name">Cox.</span> Box!</p>
+
+    <p><span class="name">Box.</span> Cox! [<i>About to embrace—<span class="name">Box</span> stops, seizes <span class="name">Cox’s</span> hand, and looks eagerly in his face.</i>] You’ll excuse the apparent insanity of the remark, but the more I gaze on your features, the more I’m convinced that you’re my long lost brother.</p>
+
+    <p><span class="name">Cox.</span> The very observation I was going to make to you!</p>
+
+    <p><span class="name">Box.</span> Ah—tell me—in mercy tell me—have you such a thing as a strawberry mark on your left arm?</p>
+
+    <p><span class="name">Cox.</span> No!</p>
+
+    <p><span class="name">Box.</span> Then it is he!</p>
+
+    <p class="direction">[<i>They rush into each other’s arms.</i></p>
+
+    <p><span class="name">Cox.</span> Of course we stop where we are?</p>
+
+    <p><span class="name">Box.</span> Of course!</p>
+
+    <p><span class="name">Cox.</span> For, between you and me, I’m rather partial to this house.</p>
+
+    <p><span class="name">Box.</span> So am I—I begin to feel quite at home in it.</p>
+
+    <p><span class="name">Cox.</span> Everything so clean and comfortable—</p>
+
+    <p><span class="name">Box.</span> And I’m sure the mistress of it, from what I have seen of her, is very anxious to please.</p>
+
+    <p><span class="name">Cox.</span> So she is—and I vote, Box, that we stick by her.</p>
+
+    <p><span class="name">Box.</span> Agreed! There’s my hand upon it—join but your’s—agree that the house is big enough to hold us both, then Box—</p>
+
+    <p><span class="name">Cox.</span> And Cox—</p>
+
+    <p><span class="name">Both.</span> Are satisfied!</p>
+
+    <p class="direction">[<i>The Curtain Falls.</i></p>
+
+    <p class="end_of_act">THE END.</p>
+
+    <div class="pagebreak"></div>
+
+    <p><br />
+    <br />
+    </p>
+
+    <div class="tnote">
+      <h3 class="tnote" id="tnote">Transcriber’s Note</h3>
+
+      <p>This transcription is based on scanned images posted by the Internet Archive from a copy in the Library of Congress:</p>
+
+      <p class="center"><a href="http://archive.org/details/boxcoxromanceofr00mort">archive.org/details/boxcoxromanceofr00mort</a></p>
+
+      <p>The following changes were noted:</p>
+
+      <ul>
+        <li>p. 4: <i>Mrs. Vernon</i>—Inserted period after name for consistency.</li>
+
+        <li>p. 4: R. C., <i>Right of Centre</i>—Inserted semicolon after “<i>Centre</i>”.</li>
+
+        <li>p. 11: [<i>Taking key, hung up, <span class="stage">L.</span> opens door…</i>—Inserted comma after “<span class="stage">L.</span>”</li>
+
+        <li>p. 13: <span class="name">Cox.</span> Don’t flatter yourself, sir.—Changed “<span class="name">Cox</span>” to “<span class="name">Box</span>”.</li>
+
+        <li>p. 13: <span class="name">Box.</span> Hollo! [<i>Turns round.</i>]—Changed “Hollo!” to “Holloa” for consistency.</li>
+
+        <li>p. 18: …<i>and brings out the dice-box..</i>—Deleted second period.</li>
+
+        <li>p. 21: You propossd to her first!—Changed “propossd” to “proposed”.</li>
+
+        <li>p. 23: <span class="name">Cox.</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[<i>Both run to door, <span class="stage">L.&nbsp;C.,</span> and eagerly listen.</i>—Inserted the dialogue “Yours!” after “<span class="name">Cox.</span>” and put the stage direction on the following line. This emendation follows the text of two other editions of the play that were inspected. The first, an 1889 edition published by Walter H. Baker &amp; Co., is available through Google Books at <a href="http://books.google.com/books?id=Hms-AAAAYAAJ">books.google.com/books?id=Hms-AAAAYAAJ</a>. The second, reprinted in a collection of John Maddison Morton’s plays, <i>Comediettas and Farces,</i> published in 1886 by Harper &amp; Brothers, is available through the Internet Archive at <a href="http://archive.org/details/comediettasfarce00mort">archive.org/details/comediettasfarce00mort</a>.</li>
+        </ul>
+
+      <p class="noindent">Variant spellings such as “trowsers,” “doating,” and “gulph,” and other inconsistencies of spelling not noted have been retained.</p>
+
+      <p>The html version of this etext attempts to reproduce the layout of the printed text. However, some concessions have been made. For example, the lists of abbreviations for exits and entrances and for relative positions on p. 4 were centered rather than coded as indented paragraphs to keep an abbreviation and the corresponding word or phrase on the same line and to prevent uneven spacing between words from line to line. In addition, stage directions printed flush right were placed on a separate line, then indented the same amount from the left margin and coded as hanging paragraphs.</p>
+
+      <p>In the text version of this etext, character titles preceding dialogue and character names in the stage directions have been rendered in all upper case letters.</p>
+
+    </div>
+  </div>
+
+</body>
+</html>
+
